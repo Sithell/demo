@@ -1,0 +1,32 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Demo</title>
+  <link href="styles.css">
+  <style>
+    *.inline { float:left; }
+    canvas {
+      border: 1px solid  #303030;
+    }
+  </style>
+</head>
+<body>
+  <form action="script.js" class="inline">
+    <input id="depth" value=10>
+    <label id="depth-label">Depth</label> <br>
+
+    <input id="angle" value=45>
+    <label id="angle-label">Angle</label> <br>
+
+    <input id="shortening" value=1.5>
+    <label id="shortening-label">Shortening</label> <br>
+
+    <input id="length" value=200>
+    <label id="length-label">Length</label> <br>
+
+    <button type="button" onclick="generate()">Generate</button>
+  </form>
+  <canvas id='canvas' height=700 width=600 class="inline"></canvas>
+  <script src="script.js"></script>
+</body>
+</html>
