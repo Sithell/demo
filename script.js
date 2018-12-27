@@ -2,18 +2,38 @@
 DELAY = 100;
 
 function generate() {
-  var setIndex = random(0, sets.length - 1);
-  ANGLE = sets[setIndex]['angle'];
-  SHORTENING = sets[setIndex]['shortening'];
-  LENGTH = sets[setIndex]['length'];
-  DEPTH = sets[setIndex]['depth'];
+  // var setIndex = random(0, sets.length - 1);
+  // ANGLE = sets[setIndex]['angle'];
+  // SHORTENING = sets[setIndex]['shortening'];
+  // LENGTH = sets[setIndex]['length'];
+  // DEPTH = sets[setIndex]['depth'];
+  DEPTH = random(8, 10);
+  ANGLE = random(0, 180);
+  SHORTENING = random(10, 20) / 10;
+  if (SHORTENING == 1) {
+    LENGTH = 30;
+  }
+  else if (SHORTENING < 1.4) {
+    LENGTH = 70;
+  }
+  else if (SHORTENING == 1.5) {
+    LENGTH = 150;
+  }
+  else if (SHORTENING < 1.7) {
+    LENGTH = 200;
+  }
+  else {
+    LENGTH = 300;
+  }
+
 
   var canvas = document.getElementById("canvas");
   var context = canvas.getContext("2d");
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  draw(context, canvas.width / 2, canvas.height / 2 + (LENGTH / 4), -90, DEPTH);
-  draw(context, canvas.width / 2, canvas.height / 2 - (LENGTH / 4), 90, DEPTH);
+  draw(context, canvas.width / 2, canvas.height / 2, -90, DEPTH);
+  draw(context, canvas.width / 2, canvas.height / 2, 90, DEPTH);
+  // draw(context, canvas.width / 2, canvas.height / 2, -210, DEPTH);
 }
 
 function draw(context, x1, y1, angle, depth) {
