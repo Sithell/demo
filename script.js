@@ -1,15 +1,17 @@
 
+DELAY = 100;
+
 function generate() {
-  DEPTH = Number(document.getElementById('depth').value);
-  ANGLE = Number(document.getElementById('angle').value);
-  SHORTENING = Number(document.getElementById('shortening').value);
-  LENGTH = Number(document.getElementById('length').value);
+  var setIndex = random(0, sets.length - 1);
+  ANGLE = sets[setIndex]['angle'];
+  SHORTENING = sets[setIndex]['shortening'];
+  LENGTH = sets[setIndex]['length'];
+  DEPTH = sets[setIndex]['depth'];
 
   var canvas = document.getElementById("canvas");
   var context = canvas.getContext("2d");
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  // draw(context, canvas.width / 2, canvas.height / 2 - LENGTH / 2, 90, DEPTH);
   draw(context, canvas.width / 2, canvas.height / 2 + (LENGTH / 4), -90, DEPTH);
   draw(context, canvas.width / 2, canvas.height / 2 - (LENGTH / 4), 90, DEPTH);
 }
@@ -19,7 +21,7 @@ function draw(context, x1, y1, angle, depth) {
     return; // TODO Draw leaf
   }
   var length = LENGTH / SHORTENING ** (DEPTH - depth + 1);
-  // var length = LENGTH;
+
   var x2 = x1 + cos(angle) * length;
   var y2 = y1 + sin(angle) * length;
 
@@ -30,12 +32,13 @@ function draw(context, x1, y1, angle, depth) {
   context.lineTo(x2, y2);
   context.closePath();
   context.stroke();
+
   setTimeout(function() {
     draw(context, x2, y2, angle + ANGLE, depth - 1);
-  }, 1)
+  }, DELAY)
   setTimeout(function() {
     draw(context, x2, y2, angle - ANGLE, depth - 1);
-  }, 1)
+  }, DELAY)
 }
 
 function sin(angle) { // angle in degrees
@@ -48,4 +51,8 @@ function cos(angle) { // angle in degrees
 
 function toRadians(angle) { // convert degrees to radians
   return angle * (Math.PI / 180);
+}
+
+function random(a, b) {
+  return Math.floor(Math.random() * (b - a + 1) + a);
 }
