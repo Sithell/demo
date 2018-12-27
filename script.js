@@ -1,5 +1,4 @@
-
-DELAY = 100;
+DELAY = 0;
 
 function generate() {
   // var setIndex = random(0, sets.length - 1);
@@ -20,7 +19,7 @@ function generate() {
     LENGTH = 150;
   }
   else if (SHORTENING < 1.7) {
-    LENGTH = 200;
+    LENGTH = 180;
   }
   else {
     LENGTH = 300;
