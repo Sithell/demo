@@ -1,4 +1,6 @@
 DELAY = 0;
+WIDTH = 5;
+WIDTH_REDUCTION = 1.7;
 
 function generate() {
   // var setIndex = random(0, sets.length - 1);
@@ -7,8 +9,8 @@ function generate() {
   // LENGTH = sets[setIndex]['length'];
   // DEPTH = sets[setIndex]['depth'];
   DEPTH = random(8, 10);
-  ANGLE = random(0, 180);
-  SHORTENING = random(10, 20) / 10;
+  ANGLE = random(3, 24) * 5;
+  SHORTENING = random(10, 17) / 10;
   if (SHORTENING == 1) {
     LENGTH = 30;
   }
@@ -31,22 +33,27 @@ function generate() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   draw(context, canvas.width / 2, canvas.height / 2, -90, DEPTH);
-  draw(context, canvas.width / 2, canvas.height / 2, 90, DEPTH);
-  // draw(context, canvas.width / 2, canvas.height / 2, -210, DEPTH);
+  draw(context, canvas.width / 2, canvas.height / 2 - LENGTH / 2, 90, DEPTH);
 }
 
 function draw(context, x1, y1, angle, depth) {
   if (depth == 0) {
     return; // TODO Draw leaf
   }
+  if (depth == DEPTH) {
+    var width = 2; // TODO refactor
+  }
+  else {
+    var width = WIDTH / WIDTH_REDUCTION ** (DEPTH - depth + 1);
+  }
   var length = LENGTH / SHORTENING ** (DEPTH - depth + 1);
-
   var x2 = x1 + cos(angle) * length;
   var y2 = y1 + sin(angle) * length;
 
   context.beginPath();
   context.strokeStyle = "#000000";
-  context.width = 5;
+  console.log(width);
+  context.lineWidth = width;
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);
   context.closePath();
