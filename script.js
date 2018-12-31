@@ -1,15 +1,17 @@
 DELAY = 0;
-WIDTH = 5;
+WIDTH = 7;
+DEPTH = 12;
 WIDTH_REDUCTION = 1.7;
 
+var delayed = [];
+
 function generate() {
-  // var setIndex = random(0, sets.length - 1);
-  // ANGLE = sets[setIndex]['angle'];
-  // SHORTENING = sets[setIndex]['shortening'];
-  // LENGTH = sets[setIndex]['length'];
-  // DEPTH = sets[setIndex]['depth'];
-  DEPTH = random(8, 10);
-  ANGLE = random(3, 24) * 5;
+  // Cancel all draw() function's calls
+  for (call in delayed) {
+    clearTimeout(call);
+  }
+
+  ANGLE = random(15, 120);
   SHORTENING = random(10, 17) / 10;
   if (SHORTENING == 1) {
     LENGTH = 30;
@@ -26,7 +28,6 @@ function generate() {
   else {
     LENGTH = 300;
   }
-
 
   var canvas = document.getElementById("canvas");
   var context = canvas.getContext("2d");
@@ -52,19 +53,19 @@ function draw(context, x1, y1, angle, depth) {
 
   context.beginPath();
   context.strokeStyle = "#000000";
-  console.log(width);
   context.lineWidth = width;
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);
   context.closePath();
   context.stroke();
 
-  setTimeout(function() {
+  // Draw 2 child branches with opposite angles
+  delayed.push(setTimeout(function() {
     draw(context, x2, y2, angle + ANGLE, depth - 1);
-  }, DELAY)
-  setTimeout(function() {
+  }, DELAY));
+  delayed.push(setTimeout(function() {
     draw(context, x2, y2, angle - ANGLE, depth - 1);
-  }, DELAY)
+  }, DELAY));
 }
 
 function sin(angle) { // angle in degrees
