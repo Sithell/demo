@@ -1,18 +1,13 @@
 DELAY = 0;
 WIDTH = 7;
-DEPTH = 12;
-WIDTH_REDUCTION = 1.7;
+DEPTH = 21;
+WIDTH_REDUCTION = 1.5;
 
 var delayed = [];
 
-function generate() {
-  // Cancel all draw() function's calls
-  for (call in delayed) {
-    clearTimeout(call);
-  }
-
+function generateRandom() {
   ANGLE = random(15, 120);
-  SHORTENING = random(10, 17) / 10;
+  SHORTENING = random(10, 15) / 10;
   if (SHORTENING == 1) {
     LENGTH = 30;
   }
@@ -28,6 +23,27 @@ function generate() {
   else {
     LENGTH = 300;
   }
+  generate();
+}
+
+function generatePreset() {
+  // TODO load presets from file
+  // Caution! Observe random() indexes
+  ANGLE = [20, 30, 45, 45, 60, 60, 68, 120][random(0, 7)];
+  SHORTENING = [1.1, 1.1, 1.2, 1.5][random(0, 3)];
+  LENGTH = 100; // TODO calc length automatically
+
+  generate();
+}
+function generate() {
+  // Cancel all draw() function's calls
+  for (call in delayed) {
+    clearTimeout(call);
+  }
+
+  // Dev purposes only, comment before commit
+  document.getElementById("angle").innerHTML = ANGLE;
+  document.getElementById("shortening").innerHTML = SHORTENING;
 
   var canvas = document.getElementById("canvas");
   var context = canvas.getContext("2d");
