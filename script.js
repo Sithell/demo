@@ -7,22 +7,8 @@ var delayed = [];
 
 function generateRandom() {
   ANGLE = random(15, 120);
-  SHORTENING = random(10, 15) / 10;
-  if (SHORTENING == 1) {
-    LENGTH = 30;
-  }
-  else if (SHORTENING < 1.4) {
-    LENGTH = 70;
-  }
-  else if (SHORTENING == 1.5) {
-    LENGTH = 150;
-  }
-  else if (SHORTENING < 1.7) {
-    LENGTH = 180;
-  }
-  else {
-    LENGTH = 300;
-  }
+  SHORTENING = random(5, 10) / 10;
+
   generate();
 }
 
@@ -30,7 +16,7 @@ function generatePreset() {
   // TODO load presets from file
   // Caution! Observe random() indexes
   ANGLE = [20, 30, 45, 45, 60, 60, 68, 120][random(0, 7)];
-  SHORTENING = [1.1, 1.1, 1.2, 1.5][random(0, 3)];
+  SHORTENING = [0.9, 0.9, 0.8, 0.6][random(0, 3)];
   LENGTH = 100; // TODO calc length automatically
 
   generate();
@@ -49,8 +35,11 @@ function generate() {
   var context = canvas.getContext("2d");
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  draw(context, canvas.width / 2, canvas.height / 2, -90, DEPTH);
-  draw(context, canvas.width / 2, canvas.height / 2 - LENGTH / 2, 90, DEPTH);
+  // Set scale
+  LENGTH = canvas.height * (1 - SHORTENING) / (1 - SHORTENING ** DEPTH);
+
+  draw(context, canvas.width / 2, canvas.height / 2 + LENGTH * SHORTENING / 2, -90, DEPTH);
+  draw(context, canvas.width / 2, canvas.height / 2 - LENGTH * SHORTENING / 2, 90, DEPTH);
 }
 
 function draw(context, x1, y1, angle, depth) {
@@ -63,7 +52,7 @@ function draw(context, x1, y1, angle, depth) {
   else {
     var width = WIDTH / WIDTH_REDUCTION ** (DEPTH - depth + 1);
   }
-  var length = LENGTH / SHORTENING ** (DEPTH - depth + 1);
+  var length = LENGTH * SHORTENING ** (DEPTH - depth + 1);
   var x2 = x1 + cos(angle) * length;
   var y2 = y1 + sin(angle) * length;
 
