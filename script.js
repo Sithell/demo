@@ -1,9 +1,10 @@
 DELAY = 0;
 WIDTH = 7;
-DEPTH = 21;
+DEPTH = 18;
 WIDTH_REDUCTION = 1.5;
 
 var delayed = [];
+var stage = DEPTH;
 
 function generateRandom() {
   ANGLE = random(15, 120);
@@ -17,33 +18,40 @@ function generatePreset() {
   // Caution! Observe random() indexes
   ANGLE = [20, 30, 45, 45, 60, 60, 68, 120][random(0, 7)];
   SHORTENING = [0.9, 0.9, 0.8, 0.6][random(0, 3)];
-  LENGTH = 100; // TODO calc length automatically
 
   generate();
 }
 function generate() {
   // Cancel all draw() function's calls
-  for (call in delayed) {
-    clearTimeout(call);
+  for (var call = 0; call <= delayed.length; call++) {
+    clearTimeout(delayed[call]);
+    delayed.splice(call, 1);
   }
 
+  stage = DEPTH;
   // Dev purposes only, comment before commit
+  // /*
   document.getElementById("angle").innerHTML = ANGLE;
   document.getElementById("shortening").innerHTML = SHORTENING;
+  // */
 
   var canvas = document.getElementById("canvas");
   var context = canvas.getContext("2d");
+  context.closePath();
+  context.stroke();
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   // Set scale
   LENGTH = canvas.height * (1 - SHORTENING) / (1 - SHORTENING ** DEPTH);
-
+  context.beginPath();
   draw(context, canvas.width / 2, canvas.height / 2 + LENGTH * SHORTENING / 2, -90, DEPTH);
   draw(context, canvas.width / 2, canvas.height / 2 - LENGTH * SHORTENING / 2, 90, DEPTH);
 }
 
 function draw(context, x1, y1, angle, depth) {
   if (depth == 0) {
+    context.closePath();
+    context.stroke();
     return; // TODO Draw leaf
   }
   if (depth == DEPTH) {
@@ -56,13 +64,18 @@ function draw(context, x1, y1, angle, depth) {
   var x2 = x1 + cos(angle) * length;
   var y2 = y1 + sin(angle) * length;
 
-  context.beginPath();
   context.strokeStyle = "#000000";
   context.lineWidth = width;
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);
-  context.closePath();
-  context.stroke();
+
+  if (stage > depth) {
+    stage = depth;
+    console.log(stage);
+    context.closePath();
+    context.stroke();
+    context.beginPath();
+  }
 
   // Draw 2 child branches with opposite angles
   delayed.push(setTimeout(function() {
