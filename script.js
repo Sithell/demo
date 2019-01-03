@@ -25,7 +25,6 @@ function generate() {
   // Cancel all draw() function's calls
   for (var call = 0; call <= delayed.length; call++) {
     clearTimeout(delayed[call]);
-    delayed.splice(call, 1);
   }
 
   // Dev purposes only, comment before deploy
