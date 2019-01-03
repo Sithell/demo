@@ -1,6 +1,6 @@
 DELAY = 0;
 WIDTH = 7;
-DEPTH = 18;
+DEPTH = 21;
 WIDTH_REDUCTION = 1.5;
 
 var delayed = [];
@@ -28,12 +28,9 @@ function generate() {
     delayed.splice(call, 1);
   }
 
-  stage = DEPTH;
-  // Dev purposes only, comment before commit
-  // /*
+  // Dev purposes only, comment before deploy
   document.getElementById("angle").innerHTML = ANGLE;
   document.getElementById("shortening").innerHTML = SHORTENING;
-  // */
 
   var canvas = document.getElementById("canvas");
   var context = canvas.getContext("2d");
@@ -43,17 +40,26 @@ function generate() {
 
   // Set scale
   LENGTH = canvas.height * (1 - SHORTENING) / (1 - SHORTENING ** DEPTH);
+  stage = DEPTH;
   context.beginPath();
   draw(context, canvas.width / 2, canvas.height / 2 + LENGTH * SHORTENING / 2, -90, DEPTH);
   draw(context, canvas.width / 2, canvas.height / 2 - LENGTH * SHORTENING / 2, 90, DEPTH);
 }
 
 function draw(context, x1, y1, angle, depth) {
-  if (depth == 0) {
+  if (depth < stage) {
+    stage = depth;
     context.closePath();
     context.stroke();
-    return; // TODO Draw leaf
+    if (depth != 0) {
+      context.beginPath();
+    }
   }
+
+  if (depth == 0) {
+    return;
+  }
+
   if (depth == DEPTH) {
     var width = 2; // TODO refactor
   }
@@ -68,14 +74,6 @@ function draw(context, x1, y1, angle, depth) {
   context.lineWidth = width;
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);
-
-  if (stage > depth) {
-    stage = depth;
-    console.log(stage);
-    context.closePath();
-    context.stroke();
-    context.beginPath();
-  }
 
   // Draw 2 child branches with opposite angles
   delayed.push(setTimeout(function() {
