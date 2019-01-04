@@ -2,17 +2,33 @@
 <head>
   <meta charset="utf-8">
   <title>Demo</title>
-  <link href="styles.css">
   <style>
     *.inline { float:left; }
     canvas {
       border: 1px solid  #303030;
     }
+    button {
+      width: 200px;
+      height: 50px;
+      background-color: #eeeeee;
+      border: none;
+      font-size: 18;
+    }
+    button:hover {
+      background-color: #e0e0e0;
+    }
+    button:active {
+      box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+      background-color: #dddddd;
+    }
+    button:focus {
+      outline: none;
+    }
   </style>
 </head>
 <body>
-  <button type="button" onclick="generateRandom()">Chance</button>
-  <button type="button" onclick="generatePreset()">Make beautiful</button> <br>
+  <button class="mdc-button" onclick="generatePreset()">Generate</button>
+  <button onclick="generateRandom()">I'm lucky!</button> <br>
   <label id="angle"></label> <label id="shortening"></label> <br>
   <canvas id='canvas' height=700 width=600></canvas>
   <script type='text/javascript' src="script.js"></script>

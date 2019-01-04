@@ -17,7 +17,7 @@ function generatePreset() {
   // TODO load presets from file
   // Caution! Observe random() indexes
   ANGLE = [20, 30, 45, 45, 60, 60, 68, 120][random(0, 7)];
-  SHORTENING = [0.9, 0.9, 0.8, 0.6][random(0, 3)];
+  SHORTENING = [0.7, 1, 0.6, 0.9, 0.7][random(0, 4)];
 
   generate();
 }
@@ -28,8 +28,8 @@ function generate() {
   }
 
   // Dev purposes only, comment before deploy
-  document.getElementById("angle").innerHTML = ANGLE;
-  document.getElementById("shortening").innerHTML = SHORTENING;
+  // document.getElementById("angle").innerHTML = ANGLE;
+  // document.getElementById("shortening").innerHTML = SHORTENING;
 
   var canvas = document.getElementById("canvas");
   var context = canvas.getContext("2d");
