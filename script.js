@@ -1,6 +1,6 @@
 DELAY = 0;
 WIDTH = 7;
-DEPTH = 21;
+DEPTH = 18;
 WIDTH_REDUCTION = 1.5;
 
 var delayed = [];
@@ -38,7 +38,11 @@ function generate() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   // Set scale
-  LENGTH = canvas.height * (1 - SHORTENING) / (1 - SHORTENING ** DEPTH);
+  if (SHORTENING == 1) {
+    LENGTH = canvas.height / DEPTH;
+  } else {
+    LENGTH = canvas.height * (1 - SHORTENING) / (1 - SHORTENING ** DEPTH);
+  }
   stage = DEPTH;
   context.beginPath();
   draw(context, canvas.width / 2, canvas.height / 2 + LENGTH * SHORTENING / 2, -90, DEPTH);
