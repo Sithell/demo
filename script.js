@@ -1,6 +1,6 @@
 DELAY = 0;
 WIDTH = 7;
-DEPTH = 18;
+DEPTH = 15;
 WIDTH_REDUCTION = 1.5;
 
 var delayed = [];
@@ -45,8 +45,12 @@ function generate() {
   }
   stage = DEPTH;
   context.beginPath();
-  draw(context, canvas.width / 2, canvas.height / 2 + LENGTH * SHORTENING / 2, -90, DEPTH);
-  draw(context, canvas.width / 2, canvas.height / 2 - LENGTH * SHORTENING / 2, 90, DEPTH);
+
+  // Draw roots
+  ROOT_COUNT = random(2, 32);
+  for (var i = 0; i < ROOT_COUNT; i++) {
+    draw(context, canvas.width / 2, canvas.height / 2, -90 + i*360/ROOT_COUNT, DEPTH);
+  }
 }
 
 function draw(context, x1, y1, angle, depth) {
