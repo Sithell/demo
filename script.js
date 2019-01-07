@@ -13,13 +13,12 @@ function generateRandom() {
   generate();
 }
 
-function generatePreset() {
-  // TODO load presets from file
-  // Caution! Observe random() indexes
-  ANGLE = [20, 30, 45, 45, 60, 60, 68, 120][random(0, 7)];
-  SHORTENING = [0.7, 1, 0.6, 0.9, 0.7][random(0, 4)];
-
-  generate();
+function download(){
+		var download = document.getElementById("download");
+		var image = document.getElementById("canvas").toDataURL("image/png")
+                    .replace("image/png", "image/octet-stream");
+    download.setAttribute("href", image);
+		//download.setAttribute("download","archive.png");
 }
 function generate() {
   // Cancel all draw() function's calls
