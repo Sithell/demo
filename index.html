@@ -27,8 +27,8 @@
   </style>
 </head>
 <body>
-  <button class="mdc-button" onclick="generatePreset()">Generate</button>
-  <button onclick="generateRandom()">I'm lucky!</button> <br>
+  <a id="download" download="fractal.png"><button type="button" onClick="download()">Download</button></a>
+  <button onclick="generateRandom()">Generate!</button> <br>
   <label id="angle"></label> <label id="shortening"></label> <br>
   <canvas id='canvas' height=700 width=700></canvas>
   <script type='text/javascript' src="script.js"></script>
