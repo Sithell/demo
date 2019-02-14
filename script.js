@@ -44,7 +44,7 @@ function generate() {
   }
   stage = DEPTH;
   context.beginPath();
-  START_COLOR = getRandomInt(0, 360);
+  START_COLOR = [getRandomInt(0, 360), getRandomInt(50, 100)];
   // Draw roots
   ROOT_COUNT = random(2, 32);
   for (var i = 0; i < ROOT_COUNT; i++) {
@@ -76,8 +76,7 @@ function draw(context, x1, y1, angle, depth) {
   var x2 = x1 + cos(angle) * length;
   var y2 = y1 + sin(angle) * length;
 
-  let color = hsvToRgb(((DEPTH - depth) * 20 + START_COLOR) % 360, 62, 86);
-  // console.log(`rgba(${color.r}, ${color.g}, ${color.b}, 1)`);
+  let color = hsvToRgb(((DEPTH - depth) * 20 + START_COLOR[0]) % 360, 100, START_COLOR[1]);
   context.strokeStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, 1)`;
   context.lineWidth = width;
   context.moveTo(x1, y1);
